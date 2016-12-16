@@ -7,9 +7,6 @@ import java.io.IOException;
 import java.io.LineNumberReader;
 
 public class service {
-    
-	
-	
 	public static void main(String[] args){
 		System.out.println("Avvio test");
 		int worker=Integer.parseInt(args[0]);
