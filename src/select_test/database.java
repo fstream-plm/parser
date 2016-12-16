@@ -14,8 +14,15 @@ public class database {
 	private String password="EQ46FP7CW0gz3Rlu";
 	private String db="spider_db";
 	private Connection connection = null;
+    Statement st = null;
 	public database(){
 		this.connect();
+        try {
+			this.st=dbFlow().createStatement();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	public void connect(){
         String url = "jdbc:mysql://localhost:3306/"+this.db;
@@ -30,10 +37,7 @@ public class database {
 		} 
 	}
 	public void query(String query) throws SQLException{
-        Statement st = null;
-        ResultSet rs = null;
-        st = this.dbFlow().createStatement();
-        rs = st.executeQuery(query);
+        st.executeUpdate(query);
 	}
 	private Connection dbFlow(){
 		return this.connection;

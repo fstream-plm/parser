@@ -8,6 +8,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 import java.io.FileReader;
@@ -95,23 +96,54 @@ public class select implements Runnable{
 	    sqlstart+="VALUES ";
 	    String query="";
 	    String api_output="";
+	    KeywordStat[] response;
+	    database mysql=new database();
 		Gson gson = new Gson();
         while (scanner.hasNextLine() && row_index<=right_edge ) {
             String line = scanner.nextLine();
-            query="";
+         query=sqlstart;
 		 try (java.util.Scanner s = new java.util.Scanner(new java.net.URL(request+line+"&loc=italy").openStream())) {
+			 api_output=s.useDelimiter("\\A").next();
+			 if(api_output!=null&&!api_output.equals("null")){
+				 response= gson.fromJson(api_output, KeywordStat[].class);
+				 for(int i=0;i<response.length;i++){	
+					 if(i!=0) query+=", ";
+					 query+="('"+response[i].keyword+"', "+
+							 	response[i].competetion+", "+
+		                        response[i].ams+", "+
+		                        response[i].lms+", "+
+		                        response[i].Estimated_Impressions+", "+
+		                        response[i].Estimated_clicks+", "+
+		                        response[i].Estimated_Cost+", "+
+		                        response[i].Estimated_CTR+",  "+
+		                        "'"+response[i].country+"', "+
+		                        response[i].Estimated_Average_CPC+", "+
+		                        response[i].Estimated_Average_Position+", "+
+		                        response[i].cpc+", "+
+		                        response[i].m1+", "+
+		                        response[i].m2+", "+
+		                        response[i].m3+", "+
+		                        response[i].m4+", "+
+		                        response[i].m5+", "+
+		                        response[i].m6+", "+
+		                        response[i].m7+", "+
+		                        response[i].m8+", "+
+		                        response[i].m9+", "+
+		                        response[i].m10+", "+
+		                        response[i].m11+", "+
+		                        response[i].m12+")";
 
-			  
-			 if(debug>0){
-				 api_output=s.useDelimiter("\\A").next();
-				 KeywordStat[] response= gson.fromJson(api_output, KeywordStat[].class);
-				 System.out.println(response[0].m1);
-				 
-		    }
+				 }
+				 System.out.println(query);
+				 mysql.query(query);
+			 }
 		 } catch (MalformedURLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

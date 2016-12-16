@@ -25,6 +25,6 @@ public class KeywordStat {
 	public float Estimated_Average_CPC;
 	public float Estimated_Average_Position;
 	public String country;
-	public String kwp_date;
+	public Float kwp_date;
 	public int lms;
 }
