@@ -10,6 +10,10 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.Scanner;
 
+import java.io.FileReader;
+import java.util.Iterator;
+import com.google.*;
+import com.google.gson.Gson;
 
 
 public class select implements Runnable{
@@ -28,6 +32,7 @@ public class select implements Runnable{
 	private int right_edge;
 	private int thd_id;
 	private int start_line;
+	private database mysql;
 	
 	public void startTimer(String s){
 		start_time=System.currentTimeMillis();
@@ -48,6 +53,7 @@ public class select implements Runnable{
 	}
 	
 	public select(String r,int d, File f,int id,int start_line) throws IOException{
+		mysql=new database();
 		request=r;
 		debug=d;
 		file=f;
@@ -84,15 +90,23 @@ public class select implements Runnable{
         	scanner.nextLine();
         	row_index++;
         }
-	    
-        
-	    
+	    String sqlstart="INSERT INTO keywords";
+	    sqlstart+="(keyword, competetion, ams, lms, impressions, clicks, cost, ctr, country, average_cpc, average_position, cpc, m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12)";
+	    sqlstart+="VALUES ";
+	    String query="";
+	    String api_output="";
+		Gson gson = new Gson();
         while (scanner.hasNextLine() && row_index<=right_edge ) {
             String line = scanner.nextLine();
-            
+            query="";
 		 try (java.util.Scanner s = new java.util.Scanner(new java.net.URL(request+line+"&loc=italy").openStream())) {
-		    if(debug>0){
-			 System.out.println(s.useDelimiter("\\A").next());
+
+			  
+			 if(debug>0){
+				 api_output=s.useDelimiter("\\A").next();
+				 KeywordStat[] response= gson.fromJson(api_output, KeywordStat[].class);
+				 System.out.println(response[0].m1);
+				 
 		    }
 		 } catch (MalformedURLException e) {
 				// TODO Auto-generated catch block

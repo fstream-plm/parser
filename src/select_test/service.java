@@ -1,11 +1,9 @@
 package select_test;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.LineNumberReader;
-
 public class service {
 	public static void main(String[] args){
 		System.out.println("Avvio test");
@@ -31,24 +29,13 @@ public class service {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		
 		select[] st=new select[worker];
-		
 		for (int i=0;i<worker;i++){
 			try {
 				st[i]=new select(query,debug,file,i,start_line);
 				st[i].start();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
+			} catch (IOException e) {e.printStackTrace();}
 		}
-		
-	
-		
 		// System.out.println("Test terminato");
 	}
 	
