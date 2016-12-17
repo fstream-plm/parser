@@ -1,5 +1,4 @@
 package select_test;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -10,15 +9,11 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.sql.SQLException;
 import java.util.Scanner;
-
 import java.io.FileReader;
 import java.util.Iterator;
 import com.google.*;
 import com.google.gson.Gson;
-
-
 public class select implements Runnable{
-
 	private URL url;
 	private URLConnection con;
 	private HttpURLConnection http;
@@ -154,21 +149,7 @@ public class select implements Runnable{
 	           	}
 	        	row_index++;
 	        }
-
 		System.out.println("TERMINATO "+row_index);
-		//timetoExecute("Finisced thread id: ");
-		/*
-		try {
-			System.out.println(query);
-			os.write(query);
-			os.flush();
-			System.out.println(http.getResponseMessage());
-			os.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		*/
 	}
 	
 	
