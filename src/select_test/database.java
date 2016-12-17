@@ -30,6 +30,7 @@ public class database {
         String password = this.password;
 		try {
             this.connection = DriverManager.getConnection(url, user, password);
+            this.connection.setAutoCommit(false);
 		} catch (SQLException e) {
 		    e.printStackTrace();
 		} catch (Exception e) {
@@ -37,7 +38,11 @@ public class database {
 		} 
 	}
 	public void query(String query) throws SQLException{
-        st.executeUpdate(query);
+		try {
+			st.executeUpdate(query);
+            
+		} catch (Exception e) {
+			e.printStackTrace();} 
 	}
 	private Connection dbFlow(){
 		return this.connection;
