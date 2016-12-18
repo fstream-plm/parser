@@ -11,22 +11,16 @@ public class service {
 		String query=args[1];
 		int debug=0,start_line=0;
 		String file_path=args[3];
-		
-		if(args[2].equals("debug")){
-			debug=1;
-		}
+		if(args[2].equals("debug")) debug=1;
 		File file = new File(file_path);
 		LineNumberReader lnr;
 		try {
 			lnr = new LineNumberReader(new FileReader(new File(file_path)));
 			lnr.skip(Long.MAX_VALUE);
 			start_line = lnr.getLineNumber()/worker;
-			//System.out.println(start_line);
 		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		select[] st=new select[worker];
